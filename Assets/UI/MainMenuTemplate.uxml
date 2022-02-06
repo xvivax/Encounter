@@ -1,15 +1,17 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/style.uss?fileID=7433441132597879392&amp;guid=d27b2147400544441b6417f7efa63404&amp;type=3#style" />
     <ui:VisualElement name="main-screen" class="general" style="justify-content: flex-start; align-items: flex-start;">
+        <ui:RadioButton label="vilnius.en.cx" name="vilnius-radio-button" class="radio-button" />
+        <ui:RadioButton label="demo.en.cx" name="demo-radio-button" class="radio-button" />
         <ui:Label text="Username" display-tooltip-when-elided="true" name="user-name-label" class="labels" />
         <ui:TextField name="user-input-field" class="textFields" />
         <ui:Label text="Password" display-tooltip-when-elided="true" name="password-label" class="labels" />
-        <ui:TextField picking-mode="Ignore" name="password-input-field" class="textFields" />
+        <ui:TextField picking-mode="Ignore" name="password-input-field" tabindex="1" class="textFields" />
         <ui:Button text="Login" display-tooltip-when-elided="true" name="login-button" class="buttons" />
         <ui:Button text="Email" display-tooltip-when-elided="true" name="email-button" class="buttons" />
         <ui:Button text="Reset cookies" display-tooltip-when-elided="true" name="reset-cookies-button" class="buttons" style="background-color: rgb(245, 38, 38);" />
         <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" mode="VerticalAndHorizontal" style="flex-grow: 1;">
-            <ui:Label display-tooltip-when-elided="true" name="result-label" text="asdasdsadasdasdas" style="font-size: 7px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
+            <ui:Label display-tooltip-when-elided="true" name="result-label" style="font-size: 7px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
         </ui:ScrollView>
     </ui:VisualElement>
 </ui:UXML>

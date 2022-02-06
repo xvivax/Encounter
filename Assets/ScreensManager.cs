@@ -15,7 +15,8 @@ public class ScreensManager : MonoBehaviour
 	private VisualElement root;
 	private string userName;
 	private string password;
-	private string result;
+	private string result = string.Empty;
+	private string url;
 
 
 	private void OnEnable()
@@ -34,19 +35,37 @@ public class ScreensManager : MonoBehaviour
 		loginScreen.enabled = true;
 		root = loginScreen.rootVisualElement;
 
+		var vilniusRadioButton = root.Q<RadioButton>("vilnius-radio-button");
+		var demoRadioButton = root.Q<RadioButton>("demo-radio-button");
+
+		vilniusRadioButton.SetSelected( true );
+
 		root.Q<Button>( "login-button" ).clicked += () =>
 		{
 			userName = root.Q<TextField>( "user-input-field" ).text;
 			password = root.Q<TextField>( "password-input-field" ).text;
 
-			//root.Q<Label>( "result-label" ).text = userName;
+			if (vilniusRadioButton.value)
+			{
+				url = vilniusRadioButton.label;
+			}
+			else if (demoRadioButton.value)
+			{
+				url = demoRadioButton.label;
+			}
 
-			StartCoroutine( SendRequest() );
+			StartCoroutine( SendLoginRequest() );
 
 			//ClearAllScreens();
 			//GameScreenHandler();
 		};
 
+		root.Q<Button>( "email-button" ).clicked += EmailButtonClicked;
+	}
+
+	private void EmailButtonClicked()
+	{
+		StartCoroutine( SendEmailRequest() );
 	}
 
 	private void GameScreenHandler()
@@ -67,20 +86,70 @@ public class ScreensManager : MonoBehaviour
 		gameScreen.enabled = false;
 	}
 
-
-	private IEnumerator SendRequest()
+	private IEnumerator SendLoginRequest()
 	{
-		string url = "http://www.demo.en.cx/Login.aspx";
+		string path = "/Login.aspx";
+		string newUrl = url + path;
 
 		WWWForm form = new WWWForm();
 		form.AddField( "Login", userName );
 		form.AddField( "Password", password );
 
-		var request = UnityWebRequest.Post( url, form);
-		request.redirectLimit = 1;
-		yield return request.SendWebRequest();
+		var postRequest = UnityWebRequest.Post( newUrl, form);
+		postRequest.redirectLimit = 1;
+		postRequest.timeout = 1;
+		yield return postRequest.SendWebRequest();
 
-		root.Q<Label>( "result-label" ).text = request.downloadHandler.text;
 
+		if (postRequest.result != UnityWebRequest.Result.Success)
+		{
+			if (postRequest.result == UnityWebRequest.Result.InProgress)
+			{
+				result = "Failed! Request in progress";
+			}
+			else if (postRequest.result == UnityWebRequest.Result.ConnectionError)
+			{
+				if (postRequest.responseCode == 302) // 302 - Http redirection response code
+				{
+					result = "Connected?";
+				}
+				else
+				{
+					result = postRequest.error;
+				}
+			}
+			else if (postRequest.result == UnityWebRequest.Result.ProtocolError)
+			{
+				result = "Failed! Protocol error";
+			}
+			else if (postRequest.result == UnityWebRequest.Result.DataProcessingError)
+			{
+				result = "Failed! Data processing error";
+			}
+
+			root.Q<Label>( "result-label" ).text = result;
+		}
+		else
+		{
+			root.Q<Label>( "result-label" ).text = postRequest.downloadHandler.text;
+		}
+	}
+
+	private IEnumerator SendEmailRequest()
+	{
+		string path = "/EnMail.aspx";
+		string newUrl = url + path;
+		var getRequest = UnityWebRequest.Get( newUrl );
+
+		yield return getRequest.SendWebRequest();
+
+		if (getRequest.result != UnityWebRequest.Result.Success)
+		{
+			root.Q<Label>( "result-label" ).text = getRequest.error;
+		}
+		else
+		{
+			root.Q<Label>( "result-label" ).text = getRequest.downloadHandler.text;
+		}
 	}
 }
