@@ -1,5 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:VisualElement style="flex-grow: 1; background-color: rgb(219, 255, 153);">
-        <ui:Button text="Back" display-tooltip-when-elided="true" name="back-button" />
+        <ui:Button text="ENsomnia: 1st Night" display-tooltip-when-elided="true" />
+        <ui:Button text="Perekupu karai" display-tooltip-when-elided="true" />
+        <ui:Button text="Back" display-tooltip-when-elided="true" name="back-button" style="margin-top: 10px;" />
     </ui:VisualElement>
 </ui:UXML>

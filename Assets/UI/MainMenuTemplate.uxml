@@ -8,7 +8,6 @@
         <ui:Label text="Password" display-tooltip-when-elided="true" name="password-label" class="labels" />
         <ui:TextField picking-mode="Ignore" name="password-input-field" tabindex="1" class="textFields" />
         <ui:Button text="Login" display-tooltip-when-elided="true" name="login-button" class="buttons" />
-        <ui:Button text="Email" display-tooltip-when-elided="true" name="email-button" class="buttons" />
         <ui:Button text="Reset cookies" display-tooltip-when-elided="true" name="reset-cookies-button" class="buttons" style="background-color: rgb(245, 38, 38);" />
         <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" mode="VerticalAndHorizontal" style="flex-grow: 1;">
             <ui:Label display-tooltip-when-elided="true" name="result-label" style="font-size: 7px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
