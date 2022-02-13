@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using HtmlAgilityPack;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
@@ -26,19 +27,40 @@ public class ScreensManager : MonoBehaviour
 
 	private void OnEnable()
 	{
-		LoadDefaultScreen();
 		NetworkingManager.Response += ServerResponse;
+		LoadDefaultScreen();
 	}
 
-	private void ServerResponse(string response)
+	private void ServerResponse( HtmlParser response )
 	{
-		root.Q<Label>( "result-label" ).text = response;
+		var userName = response.GetUserName();
+
+		List<Games> games = response.GetGamesList();
+
+		string temp = string.Empty;
+		foreach (var item in games)
+		{
+			temp += item.Name.ToString() + "\n ";
+		}
+
+		root.Q<Label>( "result-label" ).text = userName + "\n" + temp;
 	}
 
 	private void LoadDefaultScreen()
 	{
 		ClearAllScreens();
+
+		StartCoroutine( NetworkingManager.GetRequest( "m.vilnius.en.cx", GetResponse));
+
+
 		LoginScreenHandler();
+	}
+
+	private void GetResponse(HtmlParser response)
+	{
+		string userName = response.GetUserName();
+
+		root.Q<Label>( "result-label" ).text = userName;
 	}
 
 	private void LoginScreenHandler()

@@ -17,7 +17,6 @@ public class GameScreenManager : MonoBehaviour
 			return;
 		}
 		url = userPreference.URL;
-		print( userPreference.URL );
 		StartCoroutine( GetDataForMainPage() );
 	}
 
